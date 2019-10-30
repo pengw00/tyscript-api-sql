@@ -64,19 +64,19 @@ describe('Add students to registry', function() {
         assert.isTrue(sawError);
     });
 });
-// describe('Initialize Offered Classes in registry', function() {
-//     before(async function() {
-//         await getOfferedClassRepository()
-//             .updateClasses(path.join(__dirname, 'students.yaml'));
-//     });
-//     it('should have offered classes', async function() {
-//         let classes = await getOfferedClassRepository()
-//                             .allClasses();
-//         assert.exists(classes);
-//         assert.isArray(classes);
-//         for (let offered of classes) {
-//             assert.isTrue(OfferedClassRepository
-//                         .isOfferedClass(offered));
-//         }
-//     });
-// });
+describe('Initialize Offered Classes in registry', function() {
+    before(async function() {
+        await getOfferedClassRepository()
+            .updateClasses(path.join(__dirname, 'students.yaml'));
+    });
+    it('should have offered classes', async function() {
+        let classes = await getOfferedClassRepository()
+                            .allClasses();
+        assert.exists(classes);
+        assert.isArray(classes);
+        for (let offered of classes) {
+            assert.isTrue(OfferedClassRepository
+                        .isOfferedClass(offered));
+        }
+    });
+});
