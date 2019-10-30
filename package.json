@@ -24,7 +24,9 @@
   "dependencies": {
     "fs-extra": "^8.1.0",
     "js-yaml": "^3.13.1",
+    "mssql": "^5.1.0",
     "reflect-metadata": "^0.1.13",
+    "sql.js": "^1.0.0",
     "sqlite3": "^4.1.0",
     "typeorm": "^0.2.20"
   }

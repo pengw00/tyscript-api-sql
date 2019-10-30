@@ -13,7 +13,7 @@ const {
 describe('Initialize Registrar', function() {
     before(async function() {
         try {
-            await connect("registrardb.sqlite");
+            await connect();
         } catch (e) {
             console.error(`Initialize Registrar failed with `, e);
             throw e;
@@ -25,19 +25,21 @@ describe('Initialize Registrar', function() {
 });
 describe('Add students to registry', function() {
     let stud1 = {
-        name: "John Brown", 
-        entered: 1997, grade: 4,
+        name: "David Brown", 
+        entered: 1989, grade: 4,
         gender: "male"
     };
     let stud2 = {
-        name: "John Brown", 
+        name: "Green Brown", 
         entered: "trump1", grade: "senior",
         gender: "male"
     };
     let studentid1;
     let studentid2;
+    let students = [];
     it('should add a student to the registry', async function() {
         studentid1 = await getStudentRepository().createAndSave(stud1);
+        students = await getStudentRepository().allStudents();
         let student = await getStudentRepository().findOneStudent(studentid1);
         assert.exists(student);
         assert.isObject(student);
@@ -49,6 +51,8 @@ describe('Add students to registry', function() {
         assert.equal(student.grade, stud1.grade);
         assert.isString(student.gender);
         assert.equal(student.gender, stud1.gender);
+        assert.isArray(students);
+        console.log(students)
     });
     it('should fail to add a student with bad data', async function() {
         let sawError = false;
@@ -59,21 +63,20 @@ describe('Add students to registry', function() {
         }
         assert.isTrue(sawError);
     });
-    
 });
-describe('Initialize Offered Classes in registry', function() {
-    before(async function() {
-        await getOfferedClassRepository()
-            .updateClasses(path.join(__dirname, 'students.yaml'));
-    });
-    it('should have offered classes', async function() {
-        let classes = await getOfferedClassRepository()
-                            .allClasses();
-        assert.exists(classes);
-        assert.isArray(classes);
-        for (let offered of classes) {
-            assert.isTrue(OfferedClassRepository
-                        .isOfferedClass(offered));
-        }
-    });
-});
+// describe('Initialize Offered Classes in registry', function() {
+//     before(async function() {
+//         await getOfferedClassRepository()
+//             .updateClasses(path.join(__dirname, 'students.yaml'));
+//     });
+//     it('should have offered classes', async function() {
+//         let classes = await getOfferedClassRepository()
+//                             .allClasses();
+//         assert.exists(classes);
+//         assert.isArray(classes);
+//         for (let offered of classes) {
+//             assert.isTrue(OfferedClassRepository
+//                         .isOfferedClass(offered));
+//         }
+//     });
+// });

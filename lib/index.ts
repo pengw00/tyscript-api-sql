@@ -11,17 +11,20 @@ export { OfferedClass } from "./entities/OfferedClass";
 
 var _connection: Connection;
 
-export async function connect(databaseFN: string) {
+export async function connect() {
   _connection = await createConnection({
-    type: "sqlite",
-    database: databaseFN,
-    synchronize: true,
-    logging: false,
+    type: "mssql",
+    host: "localhost",
+    port: 1433,
+    username: "SA",
+    password: "<YourStrong@Passw0rd>",
+    database: "tsDB",
     entities: [Student, OfferedClass]
   });
 }
 
 export function connected() {
+  console.log(_connection);
   return typeof _connection !== "undefined";
 }
 
